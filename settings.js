@@ -10,7 +10,7 @@ var config = require("./config.js");
 // Source and destination dirs
 var paths = {
 	static: {
-		source: "./src/",
+		source: "./src-frontend/",
 		target: config.target + "/",
 		targethtml: config.htmltarget + "/"
 	},
