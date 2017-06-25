@@ -7,9 +7,15 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import uk.co.engagetech.backend.domain.Expense;
 
@@ -32,6 +38,16 @@ public class ExpensesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Expense> list() {
 		return expenses;
+	}
+
+	// TODO Location?
+	@RequestMapping(path = "", method = RequestMethod.POST)
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public ResponseEntity<?> add(@RequestBody Expense expense, UriComponentsBuilder ucb) {
+		expenses.add(expense);
+		return ResponseEntity.created(
+				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(expenses.size()).toUri())
+				.build();
 	}
 
 }

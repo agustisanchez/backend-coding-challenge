@@ -2,6 +2,11 @@ package uk.co.engagetech.backend.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 // Comment: I create immutable classes by default.
 public class Expense {
 
@@ -12,7 +17,10 @@ public class Expense {
 
 	private String reason;
 
-	public Expense(Date date, Double amount, String reason) {
+	// TODO Define date format globally
+	@JsonCreator
+	public Expense(@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy") @JsonProperty("date") Date date,
+			@JsonProperty("amount") Double amount, @JsonProperty("reason") String reason) {
 		super();
 		this.date = date;
 		this.amount = amount;
