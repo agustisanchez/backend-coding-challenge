@@ -1,11 +1,8 @@
 package uk.co.engagetech.backend.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
-import javax.annotation.PostConstruct;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import uk.co.engagetech.backend.domain.Expense;
+import uk.co.engagetech.backend.service.ExpensesService;
 
 @RestController()
 // TODO Move app context to common configuration
@@ -24,25 +22,19 @@ import uk.co.engagetech.backend.domain.Expense;
 @EnableAutoConfiguration
 public class ExpensesController {
 
-	private List<Expense> expenses = new ArrayList<>();
-
-	@PostConstruct
-	public void init() {
-		expenses.add(new Expense(new Date(), 145.987, "I'll explain later"));
-		expenses.add(new Expense(new Date(), 45.87, "Trust me, I really need the money"));
-		expenses.add(new Expense(new Date(), 500.34, "Taxi to Lutton airport"));
-	}
+	@Autowired
+	private ExpensesService expensesService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Expense> list() {
-		return expenses;
+	public Collection<Expense> list() {
+		return expensesService.list();
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
 	public ResponseEntity<?> add(@RequestBody Expense expense, UriComponentsBuilder ucb) {
-		expenses.add(expense);
-		return ResponseEntity.created(
-				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(expenses.size()).toUri())
+		Long id = expensesService.add(expense);
+		return ResponseEntity
+				.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri())
 				.build();
 	}
 
