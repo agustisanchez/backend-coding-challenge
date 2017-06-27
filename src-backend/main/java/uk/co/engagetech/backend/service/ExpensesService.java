@@ -1,13 +1,13 @@
 package uk.co.engagetech.backend.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import uk.co.engagetech.backend.domain.Expense;
@@ -15,23 +15,24 @@ import uk.co.engagetech.backend.domain.Expense;
 @Component
 public class ExpensesService {
 
-	private List<Expense> expenses = new ArrayList<>();
+	@Autowired
+	private ExpenseRepository expenseRepository;
 
 	@PostConstruct
 	public void init() {
-		expenses.add(new Expense(new Date(), 145.987, "I'll explain later"));
-		expenses.add(new Expense(new Date(), 45.87, "Trust me, I really need the money"));
-		expenses.add(new Expense(new Date(), 500.34, "Taxi to Lutton airport"));
 	}
 
-	public Collection<Expense> list() {
-		return Collections.unmodifiableCollection(expenses);
+	public Collection<ExpenseDTO> list() {
+		List<Expense> expenses = expenseRepository.findAllByOrderByDateAsc();
+		return expenses.stream().map(it -> new ExpenseDTO(it.getDate(), it.getAmount(), it.getReason()))
+				.collect(Collectors.toList());
 	}
 
-	public Long add(Expense expense) {
-		expenses.add(expense);
-		// TODO From databse
-		return (long) expenses.size();
+	@Transactional
+	public Long add(ExpenseDTO expenseDTO) {
+		Expense savedExpense = expenseRepository
+				.save(new Expense(expenseDTO.getDate(), expenseDTO.getAmount(), expenseDTO.getReason()));
+		return savedExpense.getId();
 	}
 
 }

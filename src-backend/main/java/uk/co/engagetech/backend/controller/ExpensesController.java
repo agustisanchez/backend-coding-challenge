@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import uk.co.engagetech.backend.domain.Expense;
+import uk.co.engagetech.backend.service.ExpenseDTO;
 import uk.co.engagetech.backend.service.ExpensesService;
 
 @RestController()
@@ -26,12 +26,12 @@ public class ExpensesController {
 	private ExpensesService expensesService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Collection<Expense> list() {
+	public Collection<ExpenseDTO> list() {
 		return expensesService.list();
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public ResponseEntity<?> add(@RequestBody Expense expense, UriComponentsBuilder ucb) {
+	public ResponseEntity<?> add(@RequestBody ExpenseDTO expense, UriComponentsBuilder ucb) {
 		Long id = expensesService.add(expense);
 		return ResponseEntity
 				.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri())
