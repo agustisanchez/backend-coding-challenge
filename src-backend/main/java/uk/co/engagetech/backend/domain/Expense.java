@@ -20,17 +20,17 @@ public class Expense {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
+	@NotNull
 	private Double amount;
 
-	// TODO Empty? minimum / maximum length
 	@NotNull
 	@Size(min = 1, max = 250)
 	private String reason;
 
-	@SuppressWarnings("unused")
 	public Expense() {
 	}
 

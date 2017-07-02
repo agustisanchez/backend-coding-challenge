@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 // Comment: I create immutable classes by default.
-public class ExpenseDTO {
+public class ExpenseRequest {
 
 	// TODO Use new API
 	private Date date;
@@ -19,7 +19,7 @@ public class ExpenseDTO {
 
 	// TODO Define date format globally
 	@JsonCreator
-	public ExpenseDTO(@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy") @JsonProperty("date") Date date,
+	public ExpenseRequest(@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy") @JsonProperty("date") Date date,
 			@JsonProperty("amount") Double amount, @JsonProperty("reason") String reason) {
 		super();
 		this.date = date;

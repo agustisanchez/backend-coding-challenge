@@ -22,14 +22,15 @@ public class ExpensesService {
 	public void init() {
 	}
 
-	public Collection<ExpenseDTO> list() {
+	public Collection<ExpenseResponse> list() {
 		List<Expense> expenses = expenseRepository.findAllByOrderByDateAsc();
-		return expenses.stream().map(it -> new ExpenseDTO(it.getDate(), it.getAmount(), it.getReason()))
+		return expenses.stream()
+				.map(it -> new ExpenseResponse(it.getDate(), it.getAmount(), it.getAmount() * 0.2, it.getReason()))
 				.collect(Collectors.toList());
 	}
 
 	@Transactional
-	public Long add(ExpenseDTO expenseDTO) {
+	public Long add(ExpenseRequest expenseDTO) {
 		Expense savedExpense = expenseRepository
 				.save(new Expense(expenseDTO.getDate(), expenseDTO.getAmount(), expenseDTO.getReason()));
 		return savedExpense.getId();
