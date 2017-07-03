@@ -112,3 +112,16 @@ Feel free to comment your code, or put explanations in a pull request within the
 
 ##### Why doesn’t the test include X?
 Good question. Feel free to tell us how to make the test better. Or, you know, fork it and improve it!
+
+
+# SOLUTION
+
+Hi, FrontendDeveloper, I developed the endpoints for the save (story 1) and the list (story 2) operations.
+I moved the frontend code to the backend project and I had to make some changes to the frontend configuration (your original `src` folder is now `src-frontend`.
+
+To run the application, type `mvn spring-boot:run` on the command line and the application will be available at `http://localhost:8080` .
+
+We need to discuss error handling, as the current frontend apparently ignores any errors from the backend. Also we need to define field validation (length of fields, mandatory fields, etc.) so that frontend, backend and database are in sync.
+
+For security purposes, I customized the errors returned by the backend so that only the HTTP code and no stacktrace details is returned. 
+
