@@ -1,9 +1,9 @@
 create table expenses (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
-  `amount` DECIMAL(4,2),
-  `reason` VARCHAR(250) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int not null auto_increment,
+  `date` date not null,
+  `amount` decimal(4,2),
+  `reason` varchar(250) not null,
+  primary key (`id`)
   );
   
   
