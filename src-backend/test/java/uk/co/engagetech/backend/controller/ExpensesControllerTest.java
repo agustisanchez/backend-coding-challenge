@@ -92,6 +92,17 @@ public class ExpensesControllerTest {
 
 	}
 
+	@Test
+	public void test03_addTaskWithInvalidInput() throws Exception {
+		String requestJson = "{\"amount\":\"amount\"}";
+
+		String controllerPath = controllerPath();
+
+		this.mockMvc.perform(post(controllerPath).contentType(contentType).content(requestJson))
+				.andExpect(status().isBadRequest());
+
+	}
+
 	private String controllerPath() {
 		String controllerPath = MvcUriComponentsBuilder.fromController(ExpensesController.class).build().getPath();
 		return controllerPath;
