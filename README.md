@@ -116,6 +116,33 @@ Good question. Feel free to tell us how to make the test better. Or, you know, f
 
 # SOLUTION
 
+## SETUP
+
+The application requires two MySQL schemas one for "production", the other one for the tests:
+
+Production:
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/engagetech
+spring.datasource.username=engagetech
+spring.datasource.password=engagetech
+```
+
+And this requires to create the expense table as defined in `src-backend/db/create.sql`
+
+Test:
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/engagetech_test
+spring.datasource.username=engagetech_test
+spring.datasource.password=engagetech_test
+```
+
+In this case, the table is created automatically.
+
+## Response email
+
+
 Hi, FrontendDeveloper, I developed the endpoints for the save (story 1) and the list (story 2) operations.
 I moved the frontend code to the backend project and I had to make some changes to the frontend configuration (your original `src` folder is now `src-frontend`.
 
