@@ -2,6 +2,7 @@ package uk.co.engagetech.backend.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class Expense {
 
 	@NotNull
 	@Size(min = 1, max = 250)
+	@Column(length = 250)
 	private String reason;
 
 	public Expense() {
