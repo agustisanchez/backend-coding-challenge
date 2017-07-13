@@ -55,7 +55,9 @@ public class ExpensesControllerTest {
 	@Autowired
 	private ExpenseRepository expenseRepo;
 
-	private static ExpenseRequest expenseRequest = new ExpenseRequest(new Date(), 10.0, "Some reason");
+	private static Double amount = 10.0;
+
+	private static ExpenseRequest expenseRequest = new ExpenseRequest(new Date(), amount.toString(), "Some reason");
 
 	@Before
 	public void setup() throws Exception {
@@ -87,14 +89,14 @@ public class ExpensesControllerTest {
 
 		Assert.assertEquals(1, expensesArray.length);
 		ExpenseResponse expenseResponse = expensesArray[0];
-		Assert.assertEquals(expenseRequest.getAmount(), expenseResponse.getAmount());
-		Assert.assertEquals(expenseRequest.getAmount() * vatRate, expenseResponse.getVat(), 0.01);
+		Assert.assertEquals(expenseRequest.getAmount(), String.valueOf(expenseResponse.getAmount()));
+		Assert.assertEquals(amount * vatRate, expenseResponse.getVat(), 0.01);
 
 	}
 
 	@Test
 	public void test03_addTaskWithInvalidInput() throws Exception {
-		String requestJson = "{\"amount\":\"amount\"}";
+		String requestJson = "{\"date\":\"date\"}";
 
 		String controllerPath = controllerPath();
 

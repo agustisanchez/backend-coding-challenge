@@ -13,14 +13,14 @@ public class ExpenseRequest {
 	// TODO Use new API
 	private Date date;
 
-	private Double amount;
+	private String amount;
 
 	private String reason;
 
 	// TODO Define date format globally
 	@JsonCreator
 	public ExpenseRequest(@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy") @JsonProperty("date") Date date,
-			@JsonProperty("amount") Double amount, @JsonProperty("reason") String reason) {
+			@JsonProperty("amount") String amount, @JsonProperty("reason") String reason) {
 		super();
 		this.date = date;
 		this.amount = amount;
@@ -31,7 +31,7 @@ public class ExpenseRequest {
 		return date;
 	}
 
-	public Double getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
