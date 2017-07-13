@@ -23,12 +23,24 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 		changeYear: true,
 		dateFormat: "dd/mm/yy"
 	};
-
+	
+	var vatRate = NaN;
+	
+	var loadVATRate = function(){
+		// TODO Use web service
+		vatRate = 0.2;
+	}
+	
 	var loadExpenses = function() {
 		// Retrieve a list of expenses via REST
 		restExpenses.get().then(function(expenses) {
 			$scope.expenses = expenses;
 		});
+	}
+	
+	$scope.computeVat = function(amount){
+		var value = parseFloat(amount);
+		return isNaN(value)? 0: value * vatRate;
 	}
 
 	$scope.saveExpense = function() {
@@ -46,6 +58,7 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 	};
 
 	// Initialise scope variables
+	loadVATRate();
 	loadExpenses();
 	$scope.clearExpense();
 }]);

@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import uk.co.engagetech.backend.service.ExpenseRequest;
 import uk.co.engagetech.backend.service.ExpenseResponse;
 import uk.co.engagetech.backend.service.ExpensesService;
+import uk.co.engagetech.backend.service.VatRateResponse;
 
 @RestController()
 // TODO Move app context to common configuration
@@ -25,6 +26,11 @@ public class ExpensesController {
 
 	@Autowired
 	private ExpensesService expensesService;
+
+	@RequestMapping(method = RequestMethod.GET, path = "/vatrate")
+	public VatRateResponse vatRate() {
+		return expensesService.vatRate();
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<ExpenseResponse> list() {

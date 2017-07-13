@@ -38,6 +38,10 @@ public class ExpensesService {
 		logger.info("Initialized with VAT rate {}.", vatRate);
 	}
 
+	public VatRateResponse vatRate() {
+		return new VatRateResponse(vatRate);
+	}
+
 	public Collection<ExpenseResponse> list() {
 		List<Expense> expenses = expenseRepository.findAllByOrderByDateAsc();
 		return expenses.stream()
