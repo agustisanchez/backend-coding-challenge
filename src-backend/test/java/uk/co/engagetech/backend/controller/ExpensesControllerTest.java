@@ -65,7 +65,7 @@ public class ExpensesControllerTest {
 	}
 
 	@Test
-	public void test01_addTaskSuccessfully() throws Exception {
+	public void test01_addExpenseSuccessfully() throws Exception {
 		String requestJson = objectMapper.writeValueAsString(expenseRequest);
 
 		String controllerPath = controllerPath();
@@ -78,7 +78,7 @@ public class ExpensesControllerTest {
 	}
 
 	@Test
-	public void test02_retrievePreviousTask() throws Exception {
+	public void test02_retrievePreviousExpense() throws Exception {
 
 		String controllerPath = controllerPath();
 
@@ -95,7 +95,7 @@ public class ExpensesControllerTest {
 	}
 
 	@Test
-	public void test03_addTaskWithInvalidInput() throws Exception {
+	public void test03_addExpenseWithInvalidInput() throws Exception {
 		String requestJson = "{\"date\":\"date\"}";
 
 		String controllerPath = controllerPath();
