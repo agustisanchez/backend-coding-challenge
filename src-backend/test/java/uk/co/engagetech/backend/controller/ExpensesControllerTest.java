@@ -65,6 +65,11 @@ public class ExpensesControllerTest {
 	}
 
 	@Test
+	public void test00_cleanRepo() {
+		expenseRepo.deleteAll();
+	}
+
+	@Test
 	public void test01_addExpenseSuccessfully() throws Exception {
 		String requestJson = objectMapper.writeValueAsString(expenseRequest);
 
@@ -102,6 +107,20 @@ public class ExpensesControllerTest {
 
 		this.mockMvc.perform(post(controllerPath).contentType(contentType).content(requestJson))
 				.andExpect(status().isBadRequest());
+
+	}
+
+	@Test
+	public void test04_addExpenseInEUR() throws Exception {
+		ExpenseRequest expenseRequest = new ExpenseRequest(new Date(), amount.toString() + "EUR", "Some reason");
+		String requestJson = objectMapper.writeValueAsString(expenseRequest);
+
+		String controllerPath = controllerPath();
+
+		this.mockMvc.perform(post(controllerPath).contentType(contentType).content(requestJson))
+				.andExpect(status().isCreated());
+
+		// TODO Retrieve expense and check value
 
 	}
 
