@@ -152,3 +152,9 @@ We need to discuss error handling, as the current frontend apparently ignores an
 
 For security purposes, I customized the errors returned by the backend so that only the HTTP code and no stacktrace details is returned. 
 
+## Updates
+
+Story #3 implemented.
+
+
+
