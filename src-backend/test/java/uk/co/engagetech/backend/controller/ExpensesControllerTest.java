@@ -10,7 +10,6 @@ import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,6 @@ import uk.co.engagetech.backend.service.ExpenseResponse;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @TestPropertySource("classpath:application-test.properties")
-@FixMethodOrder
 @WebAppConfiguration
 public class ExpensesControllerTest {
 
@@ -62,15 +60,11 @@ public class ExpensesControllerTest {
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
-	}
-
-	@Test
-	public void test00_cleanRepo() {
 		expenseRepo.deleteAll();
 	}
 
 	@Test
-	public void test01_addExpenseSuccessfully() throws Exception {
+	public void addExpenseSuccessfully() throws Exception {
 		String requestJson = objectMapper.writeValueAsString(expenseRequest);
 
 		String controllerPath = controllerPath();
@@ -79,13 +73,6 @@ public class ExpensesControllerTest {
 				.andExpect(status().isCreated()).andReturn().getResponse().getHeader("location");
 		String id = extractId(locationHeader);
 		Assert.assertNotNull(id);
-
-	}
-
-	@Test
-	public void test02_retrievePreviousExpense() throws Exception {
-
-		String controllerPath = controllerPath();
 
 		String responseBody = this.mockMvc.perform(get(controllerPath).contentType(contentType))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
@@ -96,11 +83,10 @@ public class ExpensesControllerTest {
 		ExpenseResponse expenseResponse = expensesArray[0];
 		Assert.assertEquals(expenseRequest.getAmount(), String.valueOf(expenseResponse.getAmount()));
 		Assert.assertEquals(amount * vatRate, expenseResponse.getVat(), 0.01);
-
 	}
 
 	@Test
-	public void test03_addExpenseWithInvalidInput() throws Exception {
+	public void addExpenseWithInvalidInput() throws Exception {
 		String requestJson = "{\"date\":\"date\"}";
 
 		String controllerPath = controllerPath();
@@ -111,7 +97,7 @@ public class ExpensesControllerTest {
 	}
 
 	@Test
-	public void test04_addExpenseInEUR() throws Exception {
+	public void addExpenseInEUR() throws Exception {
 		ExpenseRequest expenseRequest = new ExpenseRequest(new Date(), amount.toString() + "EUR", "Some reason");
 		String requestJson = objectMapper.writeValueAsString(expenseRequest);
 
