@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import uk.co.engagetech.backend.main.Application;
+import uk.co.engagetech.backend.service.CurrencyConverter;
 import uk.co.engagetech.backend.service.ExpenseRepository;
 import uk.co.engagetech.backend.service.ExpenseRequest;
 import uk.co.engagetech.backend.service.ExpenseResponse;
@@ -49,6 +50,9 @@ public class ExpensesControllerTest {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	@Autowired
+	private CurrencyConverter currencyConverter;
 
 	@Autowired
 	private ExpenseRepository expenseRepo;
@@ -106,7 +110,14 @@ public class ExpensesControllerTest {
 		this.mockMvc.perform(post(controllerPath).contentType(contentType).content(requestJson))
 				.andExpect(status().isCreated());
 
-		// TODO Retrieve expense and check value
+		String responseBody = this.mockMvc.perform(get(controllerPath).contentType(contentType))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		ExpenseResponse[] expensesArray = objectMapper.readValue(responseBody, ExpenseResponse[].class);
+
+		Assert.assertEquals(1, expensesArray.length);
+		ExpenseResponse expenseResponse = expensesArray[0];
+		Assert.assertEquals(currencyConverter.convert(amount, "EUR", "GBP"), expenseResponse.getAmount(), 0.01);
 
 	}
 
