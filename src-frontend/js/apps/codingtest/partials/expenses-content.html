@@ -17,7 +17,7 @@
 			</li>
 			<li>
 				<label>VAT</label>
-				<input type="text" ng-readonly="true" placeholder="00.00" value="{{(computeVat(newExpense.amount) | number:2)}}"/>
+				<input type="text" ng-readonly="true" placeholder="00.00" value="{{computeVat(newExpense.amount)}}"/>
 			</li>
 			<li>
 				<label>Reason</label>

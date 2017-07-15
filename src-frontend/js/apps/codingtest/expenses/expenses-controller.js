@@ -39,9 +39,37 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 		});
 	}
 	
+	// TODO accept any currency?
+	var myreg = /([0-9\.,]+)(?:\s)*(EUR)?/;
+	
+	// TODO centralize 'N/A' returns
+	// TODO create custom angular filter for formatting
 	$scope.computeVat = function(amount){
-		var value = parseFloat(amount);
-		return isNaN(value)? 0: value * vatRate;
+		if(isNaN(vatRate)){
+			return 'N/A';
+		}
+		else if(amount){
+			var result = myreg.exec(amount); //Analyze input amount
+			if (result && result.length === 3){
+				var value = parseFloat(result[1].replace(/,/g,'')) * vatRate; // Numeric part to float
+				if (isNaN(value)){
+					return 'N/A';
+				}
+				else{
+					var valueStr = value.toFixed(2); // Two decimals
+					if (result[2]){ // Append currency symbol is exist
+						valueStr += ' '+ result[2];
+					}
+					return valueStr;
+				}
+			}
+			else{
+				return 'N/A';
+			}
+		}
+		else{
+			return 'N/A';
+		}
 	}
 
 	$scope.saveExpense = function() {
