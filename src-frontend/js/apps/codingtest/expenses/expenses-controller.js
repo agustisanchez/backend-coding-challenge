@@ -27,8 +27,9 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 	var vatRate = NaN;
 	
 	var loadVATRate = function(){
-		// TODO Use web service
-		vatRate = 0.2;
+		restExpenses.at("expenses","vatrate").get().then(function(vatResponse){
+			vatRate = vatResponse.vatRate;
+		});
 	}
 	
 	var loadExpenses = function() {

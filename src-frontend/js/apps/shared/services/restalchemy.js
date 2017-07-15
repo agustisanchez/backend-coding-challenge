@@ -441,6 +441,8 @@ app.factory("restalchemy", [ "$rootScope", "$http", "$q", "$timeout", function($
 
 			// Allow the calling function to get on with things
 			$timeout(function() {
+				console.log($this);
+				console.log(params);
 				httpGet($this, params);
 			}, 0);
 
