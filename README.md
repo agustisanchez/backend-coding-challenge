@@ -128,7 +128,19 @@ spring.datasource.username=engagetech
 spring.datasource.password=engagetech
 ```
 
+```
+# mysql as root
+create database engagetech default charset 'utf-8';
+create user engagetech identified by 'engagetech';
+grant all privileges on engagetech.* to engagetech;
+```
+
 And this requires to create the expense table as defined in `src-backend/db/create.sql`
+
+```
+mysql -u engagetech -p engagetech < src-backend/db/create.sql
+```
+
 
 Test:
 
@@ -137,6 +149,14 @@ spring.datasource.url=jdbc:mysql://localhost:3306/engagetech_test
 spring.datasource.username=engagetech_test
 spring.datasource.password=engagetech_test
 ```
+
+```
+# mysql as root
+create database engagetech_test default charset 'utf-8';
+create user engagetech_test identified by 'engagetech_test';
+grant all privileges on engagetech_test.* to engagetech_test;
+```
+
 
 In this case, the table is created automatically.
 
